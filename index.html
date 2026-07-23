@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Analytics</title>
+
+    <link rel="stylesheet" href="asset/css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+<div id="app">
+
+    <!-- =========================
+         LOADING
+    ========================== -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loader"></div>
+        <h2>Life Analytics</h2>
+        <p>Loading...</p>
+    </div>
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h2>Life Analytics</h2>
+        </div>
+
+        <nav>
+
+            <button class="nav-btn active">
+                <i data-lucide="layout-dashboard"></i>
+                Dashboard
+            </button>
+
+            <button class="nav-btn">
+                <i data-lucide="calendar-days"></i>
+                Calendar
+            </button>
+
+            <button class="nav-btn">
+                <i data-lucide="bar-chart-3"></i>
+                Analytics
+            </button>
+
+            <button class="nav-btn">
+                <i data-lucide="brain"></i>
+                AI Insight
+            </button>
+
+            <button class="nav-btn">
+                <i data-lucide="settings"></i>
+                Settings
+            </button>
+
+        </nav>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="content">
+
+        <div id="dashboardPage">
+
+            <!-- HEADER -->
+
+            <header class="page-header">
+
+                <div>
+
+                    <h1>Dashboard</h1>
+
+                    <p id="currentDate">-</p>
+
+                </div>
+
+            </header>
+
+
+
+            <!-- SUMMARY -->
+
+            <section class="stats-grid">
+
+                <div class="card" id="cardScore">
+
+                    <h3>Today's Score</h3>
+
+                    <h2 id="todayScore">0</h2>
+
+                </div>
+
+                <div class="card" id="cardTotal">
+
+                    <h3>Activities</h3>
+
+                    <h2 id="totalActivities">0</h2>
+
+                </div>
+
+                <div class="card" id="cardPositive">
+
+                    <h3>Positive</h3>
+
+                    <h2 id="positivePercent">0%</h2>
+
+                </div>
+
+                <div class="card" id="cardNeutral">
+
+                    <h3>Neutral</h3>
+
+                    <h2 id="neutralPercent">0%</h2>
+
+                </div>
+
+                <div class="card" id="cardNegative">
+
+                    <h3>Negative</h3>
+
+                    <h2 id="negativePercent">0%</h2>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- CHARTS -->
+
+            <section class="charts-grid">
+
+                <div class="card">
+
+                    <h3>Daily Activity</h3>
+
+                    <canvas id="pieChart"></canvas>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>Weekly</h3>
+
+                    <canvas id="weeklyChart"></canvas>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>Monthly</h3>
+
+                    <canvas id="monthlyChart"></canvas>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- AI -->
+
+            <section class="card">
+
+                <h3>AI Insight</h3>
+
+                <div id="aiInsight">
+
+                </div>
+
+            </section>
+
+
+
+            <!-- TIMELINE -->
+
+            <section class="card">
+
+                <h3>Today's Timeline</h3>
+
+                <div id="timeline">
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =========================
+         FLOATING BUTTON
+    ========================== -->
+
+    <button id="fabButton" class="fab">
+
+        <i data-lucide="plus"></i>
+
+    </button>
+
+
+
+    <!-- =========================
+         MODAL
+    ========================== -->
+
+    <div id="activityModal" class="modal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h2>Tambah Aktivitas</h2>
+
+                <button id="closeModal">
+
+                    <i data-lucide="x"></i>
+
+                </button>
+
+            </div>
+
+
+            <form id="activityForm">
+
+                <div class="form-group">
+
+                    <label>Jam</label>
+
+                    <input
+                        id="activityTime"
+                        type="time"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Judul</label>
+
+                    <input
+                        id="activityTitle"
+                        type="text"
+                        placeholder="Contoh : Belajar HTML"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Deskripsi</label>
+
+                    <textarea
+                        id="activityDescription"
+                        rows="4"
+                        placeholder="Tulis deskripsi..."></textarea>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Status</label>
+
+                    <div class="radio-group">
+
+                        <label>
+
+                            <input
+                                id="statusPositive"
+                                type="radio"
+                                name="status"
+                                value="positive"
+                                checked>
+
+                            Positive
+
+                        </label>
+
+                        <label>
+
+                            <input
+                                id="statusNeutral"
+                                type="radio"
+                                name="status"
+                                value="neutral">
+
+                            Neutral
+
+                        </label>
+
+                        <label>
+
+                            <input
+                                id="statusNegative"
+                                type="radio"
+                                name="status"
+                                value="negative">
+
+                            Negative
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <button type="submit">
+
+                    Simpan Aktivitas
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         TOAST
+    ========================== -->
+
+    <div id="toast" class="toast">
+
+        <span id="toastIcon"></span>
+
+        <span id="toastMessage"></span>
+
+    </div>
+
+
+
+    <!-- =========================
+         BOTTOM NAV
+    ========================== -->
+
+    <nav class="bottom-nav">
+
+        <button>
+
+            <i data-lucide="house"></i>
+
+        </button>
+
+        <button>
+
+            <i data-lucide="calendar-days"></i>
+
+        </button>
+
+        <button>
+
+            <i data-lucide="bar-chart-3"></i>
+
+        </button>
+
+        <button>
+
+            <i data-lucide="settings"></i>
+
+        </button>
+
+    </nav>
+
+</div>
+
+
+<script src="asset/js/app.js"></script>
+
+</body>
+</html>
